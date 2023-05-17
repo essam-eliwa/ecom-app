@@ -1,10 +1,17 @@
 import { Router } from "express";
+import Product from "../models/product_model.js";
 
 const router = Router();
 
 //GET products: /products
 router.get("/", (req, res, next) => {
-  res.send("All Products Test Message");
+  //res.send("All Products Test Message");
+  const products = Product.find({}).then((products) => {
+    res.json(products);
+  }).catch((err) => {
+    next(err);
+  });
+
 });
 
 //Get a single product: /products/:id

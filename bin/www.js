@@ -6,7 +6,7 @@
  */
 
 import app from '../app.js';
-
+import mongoose from 'mongoose';
 import { createServer } from 'http';
 import dotenv from 'dotenv'
 dotenv.config()
@@ -18,6 +18,9 @@ dotenv.config()
 const PORT = (process.env.PORT || '8000');
 const HOST = (process.env.HOST || 'localhost');
 const ENV = (process.env.ENV || 'development');
+const MONGO_URI = (process.env.MONGO_URI);
+
+
 
 
 
@@ -27,14 +30,22 @@ const ENV = (process.env.ENV || 'development');
 
 const server = createServer(app);
 
+// Connect to MongoDB
+mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
+  server.listen(PORT);
+  server.on('error', onError);
+  server.on('listening', onListening);
+  console.log(`Server running at http://${HOST}:${PORT}/`); 
+  console.log('Connected to MongoDB');
+}).catch((err) => {
+  console.log('Error connecting to MongoDB', err.message);
+});
+
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(PORT);
-server.on('error', onError);
-server.on('listening', onListening);
-console.log(`Server running at http://${HOST}:${PORT}/`); 
+
 
 /**
  * Event listener for HTTP server "error" event.
