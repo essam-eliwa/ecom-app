@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 import index_router from "./routes/index.js";
 import about_router from "./routes/about.js";
 import orders_router from "./routes/orders.js";
+import products_router from "./routes/products.js";
 
 //Read the current directory name
 export const __filename = fileURLToPath(import.meta.url);
@@ -39,6 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index_router);
 app.use('/about', about_router);
 app.use('/orders', orders_router);
+app.use('/products', products_router);
 
 // error handler
 app.use(function(err, req, res, next) {
