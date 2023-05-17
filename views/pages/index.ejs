@@ -3,15 +3,17 @@
   <head>
     <title><%= title %></title>
     <%- include('../partials/head') %>
-    <link rel='stylesheet' href='/css/style.css' />
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
-  <body>
+  <body class="d-flex flex-column min-vh-100">
     <%- include('../partials/nav') %>
-    <h1><%= title %></h1>
-    <p><%= message %></p>
-    <p> Demo App Test</p>
-    <p id="demo"></p>
-    <p id="test"></p>
+    <div class="container">
+      <h1><%= title %></h1>
+      <p><%= message %></p>
+      <p>Demo App Test</p>
+      <p id="demo"></p>
+      <p id="test"></p>
+    </div>
     <script src="/js/script.js"></script>
     <%- include('../partials/footer') %>
   </body>
