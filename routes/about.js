@@ -1,14 +1,15 @@
 import { Router } from 'express';
-var router = Router();
+const router = Router();
 
 /* GET /about page. */
 router.get('/', function(req, res, next) {
-  res.send('About this wiki');
+  res.send('About page');
 });
 
 /* GET /about/test page. */
 router.get('/test', function(req, res, next) {
-    res.send('Test Route');
+    //res.send('Test Route');
+    res.json({message: "Test Route"});
   });
 
 export default router;

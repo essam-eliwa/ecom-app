@@ -4,7 +4,7 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import { fileURLToPath } from "url";
-
+//Import routes
 import index_router from "./routes/index.js";
 import about_router from "./routes/about.js";
 import orders_router from "./routes/orders.js";
