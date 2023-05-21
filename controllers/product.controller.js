@@ -1,4 +1,4 @@
-import Product from '../models/product_model.js';
+import Product from '../models/product.model.js';
 
 //get all products
 

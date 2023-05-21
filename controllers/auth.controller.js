@@ -2,8 +2,6 @@ import { body, validationResult } from "express-validator";
 import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
 
-const saltRounds = 10;
-
 // matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/):
 // At least one lowercase letter ((?=.*[a-z])).
 // At least one uppercase letter ((?=.*[A-Z])).
@@ -12,6 +10,9 @@ const saltRounds = 10;
 // Only allows specific characters [A-Za-z\d@$!%*?&^]+.
 // Testing valid pass use: S2G^lPokMKau
 // Validate signup form
+
+const saltRounds = 10;
+
 const validateSignup = [
   body("username").notEmpty().withMessage("Username is required"),
   body("email").isEmail().withMessage("Invalid email"),
@@ -41,17 +42,22 @@ const signupController = async (req, res) => {
 
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
-    const isMatch = await bcrypt.compare(
-      req.body.confirmPassword,
-      hashedPassword
-    );
+    const existingUser = await User.findOne({ username: req.body.username });
 
-    if (isMatch) {
-      console.log("Passwords match");
-      res.send("Signup successful");
+    if (existingUser) {
+      console.log("Email already exists");
+      res.send("Email already exists");
     } else {
-      console.log("Passwords do not match");
-      res.send("Passwords do not match");
+      const newUser = new User({
+        username: req.body.username,
+        email: req.body.email,
+        password: hashedPassword,
+      });
+
+      await newUser.save();
+
+      console.log("User saved successfully");
+      res.send("User saved successfully");
     }
   } catch (error) {
     console.log(error);
@@ -60,4 +66,5 @@ const signupController = async (req, res) => {
 };
 
 export { validateSignup, signupController };
+
 
