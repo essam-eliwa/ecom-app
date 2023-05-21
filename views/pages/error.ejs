@@ -1,6 +1,20 @@
-<h1>Error Stack:</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') %>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body class="d-flex flex-column min-vh-100">
+    <%- include('../partials/nav') %>
+    <div>
+        <h1>Error Stack:</h1>
 
-<hr>
-<pre>
-    <%= error.stack %>
-</pre>
+        <hr>
+        <pre>
+            <%= error.stack %>
+        </pre>
+    </div>
+    <%- include('../partials/footer') %>
+  </body>
+</html>
+
