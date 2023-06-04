@@ -2,12 +2,15 @@ import { Router } from "express";
 import {
   validateSignup,
   signupController,
+  validateLogin,
+  login,
+  authenticateToken,
 } from "../controllers/auth.controller.js";
 
 const router = Router();
 
 // GET home page
-router.get("/", function (req, res, next) {
+router.get("/", authenticateToken, function (req, res, next) {
   console.log("index.js: GET /");
   res.render("pages/index", {
     title: "SWE230: Express Demo App",
@@ -24,9 +27,13 @@ router.get("/signup", function (req, res, next) {
 // signup page
 router.post("/signup", validateSignup, signupController);
 
-// login page
-router.post("/login", function (req, res, next) {
-  res.send("login: respond with a resource");
+// GET login page
+router.get("/login", function (req, res, next) {
+  console.log("login: GET /login");
+  res.render("pages/login", { title: "Login page", errors: [] });
 });
+
+// POST login page
+router.post("/login", validateLogin, login);
 
 export default router;
